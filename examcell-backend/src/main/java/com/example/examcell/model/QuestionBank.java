@@ -14,14 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "questionbank")
 public class QuestionBank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "reviewstatus")
     private String reviewStatus;
-    private String comment;
 
     // Foreign keys
     @ManyToOne

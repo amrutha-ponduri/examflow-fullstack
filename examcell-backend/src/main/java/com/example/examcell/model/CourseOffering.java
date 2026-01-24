@@ -31,8 +31,6 @@ public class CourseOffering {
     private String semester;
     @Column(name = "yearofstudy")
     private String yearOfStudy;
-    @Column(name = "modulecount")
-    private int moduleCount;
 
     // Foreign keys
     @ManyToOne
@@ -51,16 +49,12 @@ public class CourseOffering {
     @ManyToOne
     @JoinColumn(name = "submitter_user_id")
     private User submitter;
-    @ManyToMany
-    @JoinTable(name = "user_courseoffering",
-            joinColumns = @JoinColumn(name = "courseofferings_id"),
-            inverseJoinColumns = @JoinColumn(name = "username"))
-    @JsonIgnoreProperties("courseOfferings")
-    private List<User> instructors;
 
     // bidirectional relationship
     @OneToMany(mappedBy = "courseOffering")
     @JsonIgnoreProperties("courseOffering")
     private List<QuestionBank> questionBanks;
-
+    @ManyToMany(mappedBy = "courseOfferings")
+    @JsonIgnoreProperties("courseOfferings")
+    private List<User> instructors;
 }

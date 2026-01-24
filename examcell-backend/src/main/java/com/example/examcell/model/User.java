@@ -1,7 +1,6 @@
 package com.example.examcell.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,18 +18,16 @@ import java.util.List;
 public class User {
     @Id
     @Column(name = "username")
-    @JsonProperty("username")
-    private String username;
+    private String userName;
     private String password;
+    private String role;
     private String name;
 
     // many to many
-    @ManyToMany(mappedBy = "instructors")
+    @ManyToMany
+    @JoinTable(name = "courseoffering_user",
+    joinColumns = @JoinColumn(name = "username"),
+    inverseJoinColumns = @JoinColumn(name = "courseofferings_id"))
     @JsonIgnoreProperties("instructors")
     private List<CourseOffering> courseOfferings;
-    @ManyToMany
-    @JoinTable(name = "user_role",
-    joinColumns = @JoinColumn(name = "username"),
-    inverseJoinColumns = @JoinColumn(name = "rolename"))
-    private List<Role> roles;
 }
