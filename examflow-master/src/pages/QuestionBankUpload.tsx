@@ -55,14 +55,13 @@ interface Module {
 }
 
 const renderLatex = (text: string) => {
-  // Split by LaTeX commands like \frac{a}{b}
-  const parts = text.split(/(\\[a-zA-Z]+{[^}]+}{[^}]+})/g);
+  const parts = text.split(/(\$[^$]+\$)/g);
 
-  return parts.map((part, index) => {
-    if (part.startsWith("\\")) {
-      return <InlineMath key={index} math={part} />;
+  return parts.map((part, i) => {
+    if (part.startsWith('$') && part.endsWith('$')) {
+      return <InlineMath key={i} math={part.slice(1, -1)} />;
     }
-    return <span key={index}>{part}</span>;
+    return <span key={i}>{part}</span>;
   });
 };
 
@@ -527,21 +526,23 @@ const QuestionBankUpload = () => {
                         <TableRow key={question.id}>
                           <TableCell className="font-medium">{question.sno}</TableCell>
                           <TableCell>
-                            <div className="relative">
-                              {/* Rendered LaTeX layer */}
-                              <div className="absolute inset-0 p-3 pointer-events-none text-transparent">
-                                <div className="text-foreground">
-                                  {renderLatex(question.content || ' ')}
-                                </div>
-                              </div>
-
-                              {/* Actual textarea */}
+                            <div className="space-y-2">
                               <Textarea
+                                placeholder="Enter question content (supports LaTeX like $\frac{a}{b}$)"
                                 value={question.content}
                                 onChange={(e) => updateQuestion(question.id, e.target.value)}
                                 rows={3}
-                                className="relative bg-transparent text-transparent caret-foreground z-10"
+                                className="min-h-[60px]"
                               />
+
+                              {question.content && (
+                                <div className="p-2 rounded-md bg-background border text-sm">
+                                  <span className="text-muted-foreground text-xs block mb-1">
+                                    Preview:
+                                  </span>
+                                  <div>{renderLatex(question.content)}</div>
+                                </div>
+                              )}
                             </div>
 
 
