@@ -65,3 +65,10 @@ examcell-backend/build/
 
 # VS Code
 examcell-backend/.vscode/
+
+
+# Ignore any .idea folder anywhere
+**/.idea/
+
+# Ignore any package-lock.json anywhere
+**/package-lock.json
