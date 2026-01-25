@@ -1,13 +1,13 @@
 package com.example.examcell.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -21,9 +21,4 @@ public class Department {
     @Column(name = "departmentname")
     private String departmentName;
     private String abbreviation;
-
-    // bidirectional relationships
-    @OneToMany(mappedBy = "department")
-    @JsonIgnoreProperties("department")
-    private List<CourseOffering> courseOfferings;
 }

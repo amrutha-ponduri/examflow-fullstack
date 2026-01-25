@@ -1,6 +1,5 @@
 package com.example.examcell.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,9 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "app_user")
+@Table(name = "app_user",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @Column(name = "username")
     @JsonProperty("username")
     private String username;
@@ -25,12 +27,9 @@ public class User {
     private String name;
 
     // many to many
-    @ManyToMany(mappedBy = "instructors")
-    @JsonIgnoreProperties("instructors")
-    private List<CourseOffering> courseOfferings;
     @ManyToMany
     @JoinTable(name = "user_role",
-    joinColumns = @JoinColumn(name = "username"),
-    inverseJoinColumns = @JoinColumn(name = "rolename"))
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "roleid"))
     private List<Role> roles;
 }

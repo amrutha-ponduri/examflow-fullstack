@@ -15,13 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "courseoffering",
-uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "course_id",
-                "program_id",
-                "department_id"
-        }
-))
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {
+                        "course_id",
+                        "program_id",
+                        "department_id"
+                }
+        ))
 public class CourseOffering {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +54,7 @@ public class CourseOffering {
     @ManyToMany
     @JoinTable(name = "user_courseoffering",
             joinColumns = @JoinColumn(name = "courseofferings_id"),
-            inverseJoinColumns = @JoinColumn(name = "username"))
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnoreProperties("courseOfferings")
     private List<User> instructors;
 

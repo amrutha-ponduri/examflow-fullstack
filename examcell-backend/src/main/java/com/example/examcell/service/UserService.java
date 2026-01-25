@@ -2,6 +2,7 @@ package com.example.examcell.service;
 
 import com.example.examcell.config.Mapper;
 import com.example.examcell.dto.UserDTO;
+import com.example.examcell.dto.UserDropdownDTO;
 import com.example.examcell.model.User;
 import com.example.examcell.repository.UserJpaRepository;
 import com.example.examcell.repository.UserRepository;
@@ -32,9 +33,9 @@ public class UserService implements UserRepository {
     }
 
     @Override
-    public UserDTO getUserByUsername(String username) {
+    public UserDTO getUserById(int id) {
         try {
-            return mapper.toUserDTO(userJpaRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+            return mapper.toUserDTO(userJpaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid arguments");
         }
@@ -46,12 +47,9 @@ public class UserService implements UserRepository {
     }
 
     @Override
-    public UserDTO updateUser(String username, User user) {
+    public UserDTO updateUser(int id, User user) {
         try {
-            User savedUser = userJpaRepository.findById(username).orElseThrow(() -> new ResponseStatusException((HttpStatus.NOT_FOUND)));
-            if (user.getCourseOfferings() != null) {
-                savedUser.setCourseOfferings(user.getCourseOfferings());
-            }
+            User savedUser = userJpaRepository.findById(id).orElseThrow(() -> new ResponseStatusException((HttpStatus.NOT_FOUND)));
             if (user.getName() != null) {
                 savedUser.setName(user.getName());
             }
@@ -71,12 +69,17 @@ public class UserService implements UserRepository {
     }
 
     @Override
-    public void deleteUser(String username) {
+    public void deleteUser(int id) {
         try {
-            UserDTO userDTO = getUserByUsername(username);
-            userJpaRepository.deleteById(username);
+            UserDTO userDTO = getUserById(id);
+            userJpaRepository.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @Override
+    public ArrayList<UserDropdownDTO> getAllUserDropdownItems() {
+        return new ArrayList<>(userJpaRepository.findAllUserDropdownItems());
     }
 }

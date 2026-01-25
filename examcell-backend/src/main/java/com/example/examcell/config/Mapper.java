@@ -26,7 +26,7 @@ public class Mapper {
         List<Role> roles = user.getRoles();
         List<CourseOfferingDetailsDTO> courseOfferingDetails = courseOfferings.stream().map(courseOffering -> toCourseOfferingDetailsDTO(courseOffering)).collect(Collectors.toList());
         List<String> roleNames = roles.stream().map(Role::getRoleName).collect(Collectors.toList());
-        return new UserDTO(user.getUsername(), user.getName(), roleNames, courseOfferingDetails);
+        return new UserDTO(user.getId(), user.getUsername(), user.getName(), roleNames, courseOfferingDetails);
     }
 
     public CourseOfferingDetailsDTO toCourseOfferingDetailsDTO(CourseOffering courseOffering) {

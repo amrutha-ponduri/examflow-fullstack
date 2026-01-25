@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-
+// http://localhost:8080/courses
 @RestController
 @RequestMapping("/courses")
 public class CourseController {
@@ -18,35 +18,35 @@ public class CourseController {
     }
 
     // method -> GET
-    // url -> https//localhost:8080/courses
+    // url -> http://localhost:8080/courses
     @GetMapping("")
     public ArrayList<Course> getAllCourses() {
         return courseService.getAllCourses();
     }
 
     // method -> GET
-    // url -> https//localhost:8080/courses/course_code -> give the course_code
+    // url -> http://localhost:8080/courses/course_code -> give the course_code
     @GetMapping("/{courseCode}")
     public Course getCourseByCourseCode(@PathVariable("courseCode") String courseCode) {
         return courseService.getCourseByCourseCode(courseCode);
     }
 
     // method -> POST
-    // url -> https//localhost:8080/courses -> must give request body
+    // url -> http://localhost:8080/courses -> must give request body
     @PostMapping("")
     public Course addCourse(@RequestBody Course course) {
         return courseService.addCourse(course);
     }
 
     // method -> PUT
-    // url -> https//localhost:8080/courses/course_code -> must give course_code & request body
+    // url -> http://localhost:8080/courses/course_code -> must give course_code & request body
     @PutMapping("/{courseCode}")
     public Course updateCourse(@PathVariable("courseCode") String courseCode, @RequestBody Course course) {
         return courseService.updateCourse(courseCode, course);
     }
 
     // method -> DELETE
-    // url -> https//localhost:8080/courses/course_code -> must give course_code
+    // url -> http://localhost:8080/courses/course_code -> must give course_code
 
     @DeleteMapping("/{courseCode}")
     public void deleteCourseByCourseCode(@PathVariable("courseCode") String courseCode) {

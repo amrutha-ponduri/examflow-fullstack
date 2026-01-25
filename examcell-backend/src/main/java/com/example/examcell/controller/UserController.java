@@ -1,6 +1,7 @@
 package com.example.examcell.controller;
 
 import com.example.examcell.dto.UserDTO;
+import com.example.examcell.dto.UserDropdownDTO;
 import com.example.examcell.model.User;
 import com.example.examcell.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+// https://localhost:8080/users => get
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -23,9 +25,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{username}")
-    public UserDTO getUserByUsername(@PathVariable("username") String username) {
-        return userService.getUserByUsername(username);
+    @GetMapping("/{id}")
+    public UserDTO getUserByUsername(@PathVariable("id") int id) {
+        return userService.getUserById(id);
     }
 
     @PostMapping("")
@@ -33,13 +35,20 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @PutMapping("/{username}")
-    public UserDTO updateUser(String username, User user) {
-        return userService.updateUser(username, user);
+    @PutMapping("/{id}")
+    public UserDTO updateUser(@PathVariable("id") int userId, User user) {
+        return userService.updateUser(userId, user);
     }
 
-    @DeleteMapping("/{username}")
-    public void deleteUser(@PathVariable("username") String username) {
-        userService.deleteUser(username);
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable("id") int id) {
+        userService.deleteUser(id);
+    }
+
+    @GetMapping("/dropdown")
+    public ArrayList<UserDropdownDTO> getAllUserDropdownItems() {
+        return userService.getAllUserDropdownItems();
     }
 }
+
+
