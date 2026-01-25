@@ -1,5 +1,6 @@
 package com.example.examcell.controller;
 
+import com.example.examcell.dto.ProgramDropdownItemDTO;
 import com.example.examcell.model.Program;
 import com.example.examcell.service.ProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,10 @@ public class ProgramController {
     @DeleteMapping("/{id}")
     public void deleteProgramById(@PathVariable("id") int id) {
         programService.deleteProgramById(id);
+    }
+
+    @GetMapping("/dropdown")
+    public ArrayList<ProgramDropdownItemDTO> getAllProgramDropdownItemsDTO() {
+        return programService.getAllProgramDropdownItemsDTO();
     }
 }

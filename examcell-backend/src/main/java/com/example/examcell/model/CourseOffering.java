@@ -46,7 +46,7 @@ public class CourseOffering {
     @JoinColumn(name = "program_id")
     private Program program;
     @ManyToOne
-    @JoinColumn(name = "regulation")
+    @JoinColumn(name = "regulation_id")
     private Regulation regulation;
     @ManyToOne
     @JoinColumn(name = "submitter_user_id")

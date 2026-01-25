@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public interface CourseRepository {
     public ArrayList<Course> getAllCourses();
 
-    public Course getCourseByCourseCode(String courseCode);
+    public Course getCourseByCourseCode(int id);
 
     public Course addCourse(Course course);
 
-    public Course updateCourse(String courseCode, Course course);
+    public Course updateCourse(int id, Course course);
 
-    public void deleteCourseByCourseCode(String courseCode);
+    public void deleteCourseByCourseCode(int id);
 }

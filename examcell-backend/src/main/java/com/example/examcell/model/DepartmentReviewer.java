@@ -17,7 +17,7 @@ public class DepartmentReviewer {
     private DepartmentReviewerId departmentReviewerId;
     @OneToOne
     @MapsId("userId")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
     @OneToOne
     @MapsId("departmentId")

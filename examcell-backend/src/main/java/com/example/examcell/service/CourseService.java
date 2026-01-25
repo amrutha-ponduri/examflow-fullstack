@@ -26,9 +26,9 @@ public class CourseService implements CourseRepository {
     }
 
     @Override
-    public Course getCourseByCourseCode(String courseCode) {
+    public Course getCourseByCourseCode(int id) {
         try {
-            return courseJpaRepository.findById(courseCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            return courseJpaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         } catch (IllegalArgumentException ie) {
             throw new IllegalArgumentException("Invalid argument");
         }
@@ -40,9 +40,9 @@ public class CourseService implements CourseRepository {
     }
 
     @Override
-    public Course updateCourse(String courseCode, Course course) {
+    public Course updateCourse(int id, Course course) {
         try {
-            Course savedCourse = getCourseByCourseCode(courseCode);
+            Course savedCourse = getCourseByCourseCode(id);
             if (course.getCourseTitle() != null) {
                 savedCourse.setCourseTitle(course.getCourseTitle());
             }
@@ -56,10 +56,10 @@ public class CourseService implements CourseRepository {
     }
 
     @Override
-    public void deleteCourseByCourseCode(String courseCode) {
+    public void deleteCourseByCourseCode(int id) {
         try {
-            Course savedCourse = getCourseByCourseCode(courseCode);
-            courseJpaRepository.deleteById(courseCode);
+            Course savedCourse = getCourseByCourseCode(id);
+            courseJpaRepository.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }

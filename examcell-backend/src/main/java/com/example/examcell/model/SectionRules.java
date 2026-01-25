@@ -24,6 +24,6 @@ public class SectionRules {
 
     // Foreign key
     @ManyToOne
-    @JoinColumn(name = "regulation")
+    @JoinColumn(name = "regulation_id")
     private Regulation regulation;
 }

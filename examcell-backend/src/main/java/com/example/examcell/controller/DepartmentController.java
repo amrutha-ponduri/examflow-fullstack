@@ -1,5 +1,6 @@
 package com.example.examcell.controller;
 
+import com.example.examcell.dto.DepartmentDropdownItemDTO;
 import com.example.examcell.dto.DepartmentReviewerDTO;
 import com.example.examcell.model.Department;
 import com.example.examcell.service.DepartmentService;
@@ -42,5 +43,10 @@ public class DepartmentController {
     @DeleteMapping("/{id}")
     public void deleteDepartment(@PathVariable("id") int id) {
         departmentService.deleteDepartment(id);
+    }
+
+    @GetMapping("/dropdown")
+    public ArrayList<DepartmentDropdownItemDTO> getAllDepartmentDropDownItems() {
+        return departmentService.getAllDepartmentDropDownItems();
     }
 }

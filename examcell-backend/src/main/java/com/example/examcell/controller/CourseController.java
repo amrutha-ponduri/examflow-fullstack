@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+
 // http://localhost:8080/courses
 @RestController
 @RequestMapping("/courses")
@@ -26,9 +27,9 @@ public class CourseController {
 
     // method -> GET
     // url -> http://localhost:8080/courses/course_code -> give the course_code
-    @GetMapping("/{courseCode}")
-    public Course getCourseByCourseCode(@PathVariable("courseCode") String courseCode) {
-        return courseService.getCourseByCourseCode(courseCode);
+    @GetMapping("/{id}")
+    public Course getCourseByCourseCode(@PathVariable("id") int id) {
+        return courseService.getCourseByCourseCode(id);
     }
 
     // method -> POST
@@ -40,17 +41,17 @@ public class CourseController {
 
     // method -> PUT
     // url -> http://localhost:8080/courses/course_code -> must give course_code & request body
-    @PutMapping("/{courseCode}")
-    public Course updateCourse(@PathVariable("courseCode") String courseCode, @RequestBody Course course) {
-        return courseService.updateCourse(courseCode, course);
+    @PutMapping("/{id}")
+    public Course updateCourse(@PathVariable("id") int id, @RequestBody Course course) {
+        return courseService.updateCourse(id, course);
     }
 
     // method -> DELETE
     // url -> http://localhost:8080/courses/course_code -> must give course_code
 
-    @DeleteMapping("/{courseCode}")
-    public void deleteCourseByCourseCode(@PathVariable("courseCode") String courseCode) {
-        courseService.deleteCourseByCourseCode(courseCode);
+    @DeleteMapping("/{id}")
+    public void deleteCourseByCourseCode(@PathVariable("id") int id) {
+        courseService.deleteCourseByCourseCode(id);
     }
 
 }

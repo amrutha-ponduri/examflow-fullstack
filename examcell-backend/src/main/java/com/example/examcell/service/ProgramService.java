@@ -1,5 +1,6 @@
 package com.example.examcell.service;
 
+import com.example.examcell.dto.ProgramDropdownItemDTO;
 import com.example.examcell.model.Program;
 import com.example.examcell.repository.ProgramJpaRepository;
 import com.example.examcell.repository.ProgramRepository;
@@ -42,8 +43,8 @@ public class ProgramService implements ProgramRepository {
     public Program updateProgram(int id, Program program) {
         try {
             Program savedProgram = getProgramById(id);
-            if (program.getType() != null) {
-                savedProgram.setType(program.getType());
+            if (program.getProgramName() != null) {
+                savedProgram.setProgramName(program.getProgramName());
             }
             return programJpaRepository.save(savedProgram);
         } catch (Exception e) {
@@ -59,5 +60,10 @@ public class ProgramService implements ProgramRepository {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @Override
+    public ArrayList<ProgramDropdownItemDTO> getAllProgramDropdownItemsDTO() {
+        return new ArrayList<>(programJpaRepository.findAllProgramDropdownItemsDTO());
     }
 }

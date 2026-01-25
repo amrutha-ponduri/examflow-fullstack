@@ -16,5 +16,6 @@ public class Program {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String type;
+    @Column(name = "programname")
+    private String programName;
 }

@@ -1,5 +1,6 @@
 package com.example.examcell.service;
 
+import com.example.examcell.dto.DepartmentDropdownItemDTO;
 import com.example.examcell.dto.DepartmentReviewerDTO;
 import com.example.examcell.model.Department;
 import com.example.examcell.model.DepartmentReviewer;
@@ -96,5 +97,10 @@ public class DepartmentService implements DepartmentRepository {
             departmentReviewerJpaRepository.delete(departmentReviewer);
         }
         departmentJpaRepository.delete(department);
+    }
+
+    @Override
+    public ArrayList<DepartmentDropdownItemDTO> getAllDepartmentDropDownItems() {
+        return new ArrayList<>(departmentJpaRepository.findAllDepartmentDropdownItemsDTO());
     }
 }
