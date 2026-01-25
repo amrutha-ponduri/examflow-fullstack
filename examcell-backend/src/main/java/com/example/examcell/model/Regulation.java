@@ -18,6 +18,6 @@ import lombok.Setter;
 public class Regulation {
     @Id
     private String regulation;
-    @Column(name = "sectionscount")
+    @Column(name = "categoriescount")
     private int sectionCount;
 }

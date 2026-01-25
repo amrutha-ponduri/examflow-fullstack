@@ -21,5 +21,5 @@ public class Course {
     private String courseCode;
     @Column(name = "coursetitle")
     private String courseTitle;
-    private Double credits;
+    private double credits;
 }
