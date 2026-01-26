@@ -18,7 +18,20 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronDown, X } from "lucide-react";
+import { 
+  ChevronDown, 
+  X, 
+  BookOpen, 
+  Calendar, 
+  Users, 
+  Layers, 
+  Building2, 
+  GraduationCap,
+  Plus,
+  Save,
+  Eye,
+  Trash2
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -77,6 +90,24 @@ interface CourseOfferingData {
   instructorIds: string[];
   moduleCount: number | "";
 }
+
+interface SectionHeaderProps {
+  icon: React.ReactNode;
+  title: string;
+  subtitle?: string;
+}
+
+const SectionHeader: React.FC<SectionHeaderProps> = ({ icon, title, subtitle }) => (
+  <div className="flex items-center gap-3 mb-6">
+    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary">
+      {icon}
+    </div>
+    <div>
+      <h3 className="text-base font-semibold text-foreground">{title}</h3>
+      {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+    </div>
+  </div>
+);
 
 const CourseOfferingForm: React.FC = () => {
   const { toast } = useToast();
@@ -273,24 +304,39 @@ const CourseOfferingForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-start justify-center p-4 py-8">
-      <Card className="w-full max-w-4xl shadow-md">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold underline underline-offset-4 decoration-2">
-            Course Offering
-          </CardTitle>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-start justify-center p-4 sm:p-6 lg:p-8">
+      <Card className="w-full max-w-5xl shadow-xl border-0 bg-card/95 backdrop-blur-sm">
+        {/* Header with gradient accent */}
+        <CardHeader className="pb-2 pt-8 px-8 relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/40" />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary text-primary-foreground shadow-lg">
+              <BookOpen className="w-7 h-7" />
+            </div>
+            <div>
+              <CardTitle className="text-2xl font-bold text-foreground tracking-tight">
+                Course Offering
+              </CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">
+                Configure academic course instance details
+              </p>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[calc(100vh-200px)] pr-4">
-            <form className="space-y-8">
+
+        <CardContent className="px-8 pb-8">
+          <ScrollArea className="h-[calc(100vh-260px)] pr-4">
+            <form className="space-y-8 pt-6">
               {/* Academic Details Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                  Academic Details
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="rounded-xl border border-border/50 bg-muted/20 p-6 transition-all hover:border-border">
+                <SectionHeader 
+                  icon={<Calendar className="w-5 h-5" />}
+                  title="Academic Details"
+                  subtitle="Define the academic period and study parameters"
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   <div className="space-y-2">
-                    <Label htmlFor="academicYear" className="text-sm font-medium">
+                    <Label htmlFor="academicYear" className="text-sm font-medium text-foreground">
                       Academic Year <span className="text-destructive">*</span>
                     </Label>
                     <Input
@@ -300,25 +346,25 @@ const CourseOfferingForm: React.FC = () => {
                       placeholder="e.g., 2024-25"
                       value={formData.academicYear}
                       onChange={handleInputChange}
-                      className="w-full"
+                      className="h-11 bg-background border-border/60 focus:border-primary transition-colors"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="semester" className="text-sm font-medium">
+                    <Label htmlFor="semester" className="text-sm font-medium text-foreground">
                       Semester <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.semester}
                       onValueChange={(value) => handleSelectChange("semester", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select semester" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
+                      <SelectContent className="bg-popover border shadow-lg">
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
-                          <SelectItem key={sem} value={sem.toString()}>
-                            {sem}
+                          <SelectItem key={sem} value={sem.toString()} className="cursor-pointer">
+                            Semester {sem}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -326,19 +372,19 @@ const CourseOfferingForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="yearOfStudy" className="text-sm font-medium">
+                    <Label htmlFor="yearOfStudy" className="text-sm font-medium text-foreground">
                       Year of Study <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.yearOfStudy}
                       onValueChange={(value) => handleSelectChange("yearOfStudy", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select year" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
-                        {["1st", "2nd", "3rd", "4th"].map((year) => (
-                          <SelectItem key={year} value={year}>
+                      <SelectContent className="bg-popover border shadow-lg">
+                        {["1st Year", "2nd Year", "3rd Year", "4th Year"].map((year, idx) => (
+                          <SelectItem key={year} value={`${idx + 1}st`.replace('1st', '1st').replace('2st', '2nd').replace('3st', '3rd').replace('4st', '4th')} className="cursor-pointer">
                             {year}
                           </SelectItem>
                         ))}
@@ -347,7 +393,7 @@ const CourseOfferingForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="moduleAmount" className="text-sm font-medium">
+                    <Label htmlFor="moduleAmount" className="text-sm font-medium text-foreground">
                       Module Amount <span className="text-destructive">*</span>
                     </Label>
                     <Input
@@ -358,34 +404,34 @@ const CourseOfferingForm: React.FC = () => {
                       placeholder="Enter amount"
                       value={formData.moduleAmount}
                       onChange={handleInputChange}
-                      className="w-full"
+                      className="h-11 bg-background border-border/60 focus:border-primary transition-colors"
                     />
                   </div>
                 </div>
               </div>
 
-              <Separator />
-
               {/* Academic Mapping Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                  Academic Mapping
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-border/50 bg-muted/20 p-6 transition-all hover:border-border">
+                <SectionHeader 
+                  icon={<Building2 className="w-5 h-5" />}
+                  title="Academic Mapping"
+                  subtitle="Link course to department, program, and regulation"
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <Label htmlFor="departmentId" className="text-sm font-medium">
+                    <Label htmlFor="departmentId" className="text-sm font-medium text-foreground">
                       Department <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.departmentId}
                       onValueChange={(value) => handleSelectChange("departmentId", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select department" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
+                      <SelectContent className="bg-popover border shadow-lg">
                         {mockDepartments.map((dept) => (
-                          <SelectItem key={dept.id} value={dept.id.toString()}>
+                          <SelectItem key={dept.id} value={dept.id.toString()} className="cursor-pointer">
                             {dept.name}
                           </SelectItem>
                         ))}
@@ -394,20 +440,21 @@ const CourseOfferingForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="courseId" className="text-sm font-medium">
+                    <Label htmlFor="courseId" className="text-sm font-medium text-foreground">
                       Course <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.courseId}
                       onValueChange={(value) => handleSelectChange("courseId", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select course" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
+                      <SelectContent className="bg-popover border shadow-lg">
                         {mockCourses.map((course) => (
-                          <SelectItem key={course.id} value={course.id.toString()}>
-                            {course.code} - {course.title}
+                          <SelectItem key={course.id} value={course.id.toString()} className="cursor-pointer">
+                            <span className="font-medium text-primary">{course.code}</span>
+                            <span className="text-muted-foreground"> — {course.title}</span>
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -415,19 +462,19 @@ const CourseOfferingForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="programId" className="text-sm font-medium">
+                    <Label htmlFor="programId" className="text-sm font-medium text-foreground">
                       Program <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.programId}
                       onValueChange={(value) => handleSelectChange("programId", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select program" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
+                      <SelectContent className="bg-popover border shadow-lg">
                         {mockPrograms.map((program) => (
-                          <SelectItem key={program.id} value={program.id.toString()}>
+                          <SelectItem key={program.id} value={program.id.toString()} className="cursor-pointer">
                             {program.name}
                           </SelectItem>
                         ))}
@@ -436,20 +483,22 @@ const CourseOfferingForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="regulationId" className="text-sm font-medium">
+                    <Label htmlFor="regulationId" className="text-sm font-medium text-foreground">
                       Regulation <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.regulationId}
                       onValueChange={(value) => handleSelectChange("regulationId", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select regulation" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
+                      <SelectContent className="bg-popover border shadow-lg">
                         {mockRegulations.map((reg) => (
-                          <SelectItem key={reg.id} value={reg.id.toString()}>
-                            {reg.name}
+                          <SelectItem key={reg.id} value={reg.id.toString()} className="cursor-pointer">
+                            <Badge variant="outline" className="font-semibold">
+                              {reg.name}
+                            </Badge>
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -458,29 +507,36 @@ const CourseOfferingForm: React.FC = () => {
                 </div>
               </div>
 
-              <Separator />
-
               {/* User Assignment Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                  User Assignment
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-border/50 bg-muted/20 p-6 transition-all hover:border-border">
+                <SectionHeader 
+                  icon={<Users className="w-5 h-5" />}
+                  title="User Assignment"
+                  subtitle="Assign submitter and instructors for this offering"
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <Label htmlFor="submitterId" className="text-sm font-medium">
+                    <Label htmlFor="submitterId" className="text-sm font-medium text-foreground">
                       Submitter <span className="text-destructive">*</span>
                     </Label>
                     <Select
                       value={formData.submitterId}
                       onValueChange={(value) => handleSelectChange("submitterId", value)}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-11 bg-background border-border/60 focus:border-primary">
                         <SelectValue placeholder="Select submitter" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border shadow-md z-50">
+                      <SelectContent className="bg-popover border shadow-lg">
                         {mockUsers.map((user) => (
-                          <SelectItem key={user.id} value={user.id.toString()}>
-                            {user.name}
+                          <SelectItem key={user.id} value={user.id.toString()} className="cursor-pointer">
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                                <span className="text-xs font-medium text-primary">
+                                  {user.name.split(' ').map(n => n[0]).join('')}
+                                </span>
+                              </div>
+                              {user.name}
+                            </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -488,7 +544,7 @@ const CourseOfferingForm: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium">
+                    <Label className="text-sm font-medium text-foreground">
                       Instructor(s) <span className="text-destructive">*</span>
                     </Label>
                     <Popover open={instructorPopoverOpen} onOpenChange={setInstructorPopoverOpen}>
@@ -496,9 +552,9 @@ const CourseOfferingForm: React.FC = () => {
                         <Button
                           variant="outline"
                           role="combobox"
-                          className="w-full justify-between font-normal h-auto min-h-10"
+                          className="w-full justify-between font-normal h-auto min-h-11 bg-background border-border/60 hover:border-primary hover:bg-background"
                         >
-                          <div className="flex flex-wrap gap-1 flex-1">
+                          <div className="flex flex-wrap gap-1.5 flex-1 py-1">
                             {formData.instructorIds.length === 0 ? (
                               <span className="text-muted-foreground">Select instructors</span>
                             ) : (
@@ -506,7 +562,7 @@ const CourseOfferingForm: React.FC = () => {
                                 <Badge
                                   key={idx}
                                   variant="secondary"
-                                  className="mr-1 mb-1"
+                                  className="bg-primary/10 text-primary border-0 hover:bg-primary/20 transition-colors"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     const userId = formData.instructorIds[idx];
@@ -514,46 +570,65 @@ const CourseOfferingForm: React.FC = () => {
                                   }}
                                 >
                                   {name}
-                                  <X className="ml-1 h-3 w-3 cursor-pointer" />
+                                  <X className="ml-1.5 h-3 w-3 cursor-pointer hover:text-destructive transition-colors" />
                                 </Badge>
                               ))
                             )}
                           </div>
-                          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          <ChevronDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full p-2 bg-background border shadow-md z-50" align="start">
-                        <div className="space-y-2">
-                          {mockUsers.map((user) => (
-                            <div
-                              key={user.id}
-                              className="flex items-center space-x-2 p-2 rounded hover:bg-muted cursor-pointer"
-                              onClick={() => handleInstructorToggle(user.id.toString())}
-                            >
-                              <Checkbox
-                                checked={formData.instructorIds.includes(user.id.toString())}
-                                onCheckedChange={() => handleInstructorToggle(user.id.toString())}
-                              />
-                              <span className="text-sm">{user.name}</span>
-                            </div>
-                          ))}
+                      <PopoverContent className="w-[300px] p-0 bg-popover border shadow-lg" align="start">
+                        <div className="p-2 border-b bg-muted/30">
+                          <p className="text-xs font-medium text-muted-foreground">
+                            Select one or more instructors
+                          </p>
                         </div>
+                        <ScrollArea className="h-[200px]">
+                          <div className="p-2 space-y-1">
+                            {mockUsers.map((user) => (
+                              <div
+                                key={user.id}
+                                className={`flex items-center gap-3 p-2.5 rounded-lg cursor-pointer transition-colors ${
+                                  formData.instructorIds.includes(user.id.toString())
+                                    ? 'bg-primary/10 border border-primary/20'
+                                    : 'hover:bg-muted'
+                                }`}
+                                onClick={() => handleInstructorToggle(user.id.toString())}
+                              >
+                                <Checkbox
+                                  checked={formData.instructorIds.includes(user.id.toString())}
+                                  onCheckedChange={() => handleInstructorToggle(user.id.toString())}
+                                  className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                                />
+                                <div className="flex items-center gap-2 flex-1">
+                                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <span className="text-xs font-medium text-primary">
+                                      {user.name.split(' ').map(n => n[0]).join('')}
+                                    </span>
+                                  </div>
+                                  <span className="text-sm font-medium">{user.name}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </ScrollArea>
                       </PopoverContent>
                     </Popover>
                   </div>
                 </div>
               </div>
 
-              <Separator />
-
               {/* Module Configuration Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                  Module Configuration
-                </h3>
+              <div className="rounded-xl border border-border/50 bg-muted/20 p-6 transition-all hover:border-border">
+                <SectionHeader 
+                  icon={<Layers className="w-5 h-5" />}
+                  title="Module Configuration"
+                  subtitle="Define the structure of course modules"
+                />
                 <div className="space-y-2 max-w-xs">
-                  <Label htmlFor="moduleCount" className="text-sm font-medium">
-                    Module Count
+                  <Label htmlFor="moduleCount" className="text-sm font-medium text-foreground">
+                    Number of Modules
                   </Label>
                   <Input
                     id="moduleCount"
@@ -563,80 +638,109 @@ const CourseOfferingForm: React.FC = () => {
                     placeholder="Enter number of modules"
                     value={formData.moduleCount}
                     onChange={handleInputChange}
-                    className="w-full"
+                    className="h-11 bg-background border-border/60 focus:border-primary transition-colors"
                   />
                 </div>
 
                 {modules.length > 0 && (
-                  <div className="space-y-4 mt-4">
-                    {modules.map((module) => (
-                      <div
-                        key={module.id}
-                        className="p-4 border rounded-lg bg-muted/30 space-y-4"
-                      >
-                        <h4 className="text-sm font-medium text-foreground">
-                          Module {module.id}
-                        </h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label
-                              htmlFor={`moduleNumber-${module.id}`}
-                              className="text-xs font-medium"
-                            >
-                              Module Number <span className="text-destructive">*</span>
-                            </Label>
-                            <Input
-                              id={`moduleNumber-${module.id}`}
-                              type="number"
-                              min="1"
-                              placeholder="e.g., 1"
-                              value={module.moduleNumber}
-                              onChange={(e) =>
-                                handleModuleChange(module.id, "moduleNumber", e.target.value)
-                              }
-                              className="w-full"
-                            />
+                  <div className="mt-6 space-y-4">
+                    <Separator className="bg-border/50" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {modules.map((module) => (
+                        <div
+                          key={module.id}
+                          className="p-5 border border-border/60 rounded-xl bg-background shadow-sm hover:shadow-md transition-shadow"
+                        >
+                          <div className="flex items-center gap-2 mb-4">
+                            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold">
+                              {module.id}
+                            </div>
+                            <h4 className="text-sm font-semibold text-foreground">
+                              Module {module.id}
+                            </h4>
                           </div>
+                          <div className="space-y-4">
+                            <div className="space-y-2">
+                              <Label
+                                htmlFor={`moduleNumber-${module.id}`}
+                                className="text-xs font-medium text-muted-foreground"
+                              >
+                                Module Number <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id={`moduleNumber-${module.id}`}
+                                type="number"
+                                min="1"
+                                placeholder="e.g., 1"
+                                value={module.moduleNumber}
+                                onChange={(e) =>
+                                  handleModuleChange(module.id, "moduleNumber", e.target.value)
+                                }
+                                className="h-10 bg-muted/30 border-border/60 focus:border-primary"
+                              />
+                            </div>
 
-                          <div className="space-y-2">
-                            <Label
-                              htmlFor={`moduleName-${module.id}`}
-                              className="text-xs font-medium"
-                            >
-                              Module Name <span className="text-destructive">*</span>
-                            </Label>
-                            <Input
-                              id={`moduleName-${module.id}`}
-                              type="text"
-                              placeholder="e.g., Introduction to Programming"
-                              value={module.moduleName}
-                              onChange={(e) =>
-                                handleModuleChange(module.id, "moduleName", e.target.value)
-                              }
-                              className="w-full"
-                            />
+                            <div className="space-y-2">
+                              <Label
+                                htmlFor={`moduleName-${module.id}`}
+                                className="text-xs font-medium text-muted-foreground"
+                              >
+                                Module Name <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id={`moduleName-${module.id}`}
+                                type="text"
+                                placeholder="e.g., Introduction to Programming"
+                                value={module.moduleName}
+                                onChange={(e) =>
+                                  handleModuleChange(module.id, "moduleName", e.target.value)
+                                }
+                                className="h-10 bg-muted/30 border-border/60 focus:border-primary"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
-              <Separator />
-
               {/* Action Buttons */}
-              <div className="flex flex-wrap justify-end gap-3 pt-4">
-                <Button type="button" onClick={handleAdd} className="px-6">
+              <div className="flex flex-wrap justify-end gap-3 pt-6 border-t border-border/50">
+                <Button 
+                  type="button" 
+                  onClick={handleAdd} 
+                  className="h-11 px-6 gap-2 shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <Plus className="w-4 h-4" />
                   Add
                 </Button>
-                <Button type="button" variant="secondary" onClick={handleUpdate} className="px-6">
+                <Button 
+                  type="button" 
+                  variant="secondary" 
+                  onClick={handleUpdate} 
+                  className="h-11 px-6 gap-2"
+                >
+                  <Save className="w-4 h-4" />
                   Update
                 </Button>
-                <Button type="button" variant="outline" onClick={handleView} className="px-6">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={handleView} 
+                  className="h-11 px-6 gap-2"
+                >
+                  <Eye className="w-4 h-4" />
                   View
                 </Button>
-                <Button type="button" variant="destructive" onClick={handleDelete} className="px-6">
+                <Button 
+                  type="button" 
+                  variant="destructive" 
+                  onClick={handleDelete} 
+                  className="h-11 px-6 gap-2"
+                >
+                  <Trash2 className="w-4 h-4" />
                   Delete
                 </Button>
               </div>
