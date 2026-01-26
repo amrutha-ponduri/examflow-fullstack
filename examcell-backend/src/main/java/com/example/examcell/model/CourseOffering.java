@@ -57,10 +57,4 @@ public class CourseOffering {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnoreProperties("courseOfferings")
     private List<User> instructors;
-
-    // bidirectional relationship
-    @OneToMany(mappedBy = "courseOffering")
-    @JsonIgnoreProperties("courseOffering")
-    private List<QuestionBank> questionBanks;
-
 }

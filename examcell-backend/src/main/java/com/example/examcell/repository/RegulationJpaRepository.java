@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RegulationJpaRepository extends JpaRepository<Regulation, String> {
+public interface RegulationJpaRepository extends JpaRepository<Regulation, Integer> {
 
     @Query("""
             SELECT new com.example.examcell.dto.RegulationDropdownItemDTO(r.id, r.regulationName)

@@ -1,8 +1,8 @@
 package com.example.examcell.controller;
 
+import com.example.examcell.dto.DepartmentDTO;
 import com.example.examcell.dto.DepartmentDropdownItemDTO;
 import com.example.examcell.dto.DepartmentReviewerDTO;
-import com.example.examcell.model.Department;
 import com.example.examcell.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,22 +21,22 @@ public class DepartmentController {
     }
 
     @GetMapping("")
-    public ArrayList<Department> getAllDepartments() {
+    public ArrayList<DepartmentDTO> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
     @GetMapping("/{id}")
-    public Department getDepartmentById(@PathVariable("id") int id) {
+    public DepartmentDTO getDepartmentById(@PathVariable("id") int id) {
         return departmentService.getDepartmentById(id);
     }
 
     @PostMapping("")
-    public DepartmentReviewerDTO addDepartment(@RequestBody DepartmentReviewerDTO departmentReviewerDTO) {
+    public DepartmentDTO addDepartment(@RequestBody DepartmentReviewerDTO departmentReviewerDTO) {
         return departmentService.addDepartment(departmentReviewerDTO);
     }
 
     @PutMapping("/{id}")
-    public DepartmentReviewerDTO updateDepartment(@PathVariable("id") int id, DepartmentReviewerDTO departmentReviewerDTO) {
+    public DepartmentDTO updateDepartment(@PathVariable("id") int id, @RequestBody DepartmentReviewerDTO departmentReviewerDTO) {
         return departmentService.updateDepartment(id, departmentReviewerDTO);
     }
 

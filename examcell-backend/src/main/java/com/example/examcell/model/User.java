@@ -1,5 +1,6 @@
 package com.example.examcell.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "username")
     @JsonProperty("username")
     private String username;
@@ -32,4 +33,9 @@ public class User {
             joinColumns = @JoinColumn(name = "userid"),
             inverseJoinColumns = @JoinColumn(name = "roleid"))
     private List<Role> roles;
+
+    // bidirectional mapping --> only for reading
+    @ManyToMany(mappedBy = "instructors")
+    @JsonIgnoreProperties("instructors")
+    private List<CourseOffering> courseOfferings;
 }

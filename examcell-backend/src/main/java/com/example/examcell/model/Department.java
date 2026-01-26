@@ -1,9 +1,8 @@
 package com.example.examcell.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +16,15 @@ import lombok.Setter;
 @Table(name = "department")
 public class Department {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "departmentname")
+    @JsonProperty("department_name")
     private String departmentName;
     private String abbreviation;
+
+    // bidirectional mapping --> only read
+    @OneToOne(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("department")
+    private DepartmentReviewer departmentReviewer;
 }

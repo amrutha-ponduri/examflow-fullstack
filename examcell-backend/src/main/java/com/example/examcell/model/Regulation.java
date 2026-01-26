@@ -1,10 +1,14 @@
 package com.example.examcell.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,8 +19,14 @@ import lombok.Setter;
 public class Regulation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+    @JsonProperty("regulation_name")
     private String regulationName;
-    @Column(name = "categoriescount")
-    private int sectionCount;
+
+
+    // bidirectional mapping
+    @OneToMany(mappedBy = "regulation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("regulation")
+    @JsonProperty("section_rules")
+    private List<SectionRules> sectionsRules;
 }
