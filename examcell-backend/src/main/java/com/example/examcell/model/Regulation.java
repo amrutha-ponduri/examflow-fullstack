@@ -1,13 +1,14 @@
 package com.example.examcell.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +18,15 @@ import lombok.Setter;
 @Table(name = "regulation")
 public class Regulation {
     @Id
-    private String regulation;
-    @Column(name = "categoriescount")
-    private int sectionCount;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @JsonProperty("regulation_name")
+    private String regulationName;
+
+
+    // bidirectional mapping
+    @OneToMany(mappedBy = "regulation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("regulation")
+    @JsonProperty("section_rules")
+    private List<SectionRules> sectionsRules;
 }

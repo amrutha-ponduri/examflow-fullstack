@@ -12,12 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "program")
-public class Program {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "programname")
-    @JsonProperty("program_name")
-    private String programName;
+    @Column(name = "rolename")
+    @JsonProperty("role_name")
+    private String roleName;
 }

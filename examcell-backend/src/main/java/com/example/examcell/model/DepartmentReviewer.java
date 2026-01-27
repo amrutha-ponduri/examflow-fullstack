@@ -16,8 +16,8 @@ public class DepartmentReviewer {
     @EmbeddedId
     private DepartmentReviewerId departmentReviewerId;
     @OneToOne
-    @MapsId("userName")
-    @JoinColumn(name = "user_name")
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
     private User user;
     @OneToOne
     @MapsId("departmentId")

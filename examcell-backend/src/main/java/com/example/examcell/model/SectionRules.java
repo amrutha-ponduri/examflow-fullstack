@@ -1,5 +1,7 @@
 package com.example.examcell.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,15 +17,18 @@ import lombok.Setter;
 public class SectionRules {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "sectionname")
+    @JsonProperty("section_name")
     private String sectionName;
-    private int marks;
+    private Integer marks;
     @Column(name = "minquestionscount")
-    private int minQuestionsCount;
+    @JsonProperty("min_questions_count")
+    private Integer minQuestionsCount;
 
     // Foreign key
     @ManyToOne
-    @JoinColumn(name = "regulation")
+    @JoinColumn(name = "regulation_id")
+    @JsonIgnoreProperties("sectionsRules")
     private Regulation regulation;
 }

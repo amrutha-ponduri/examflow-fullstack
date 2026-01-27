@@ -1,9 +1,7 @@
 package com.example.examcell.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +15,13 @@ import lombok.Setter;
 @Table(name = "course")
 public class Course {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "coursecode")
+    @JsonProperty("course_code")
     private String courseCode;
+    @JsonProperty("course_title")
     @Column(name = "coursetitle")
     private String courseTitle;
-    private double credits;
+    private Double credits;
 }

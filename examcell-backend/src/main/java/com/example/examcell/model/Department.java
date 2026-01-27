@@ -1,13 +1,12 @@
 package com.example.examcell.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,13 +16,15 @@ import java.util.List;
 @Table(name = "department")
 public class Department {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "departmentname")
+    @JsonProperty("department_name")
     private String departmentName;
     private String abbreviation;
 
-    // bidirectional relationships
-    @OneToMany(mappedBy = "department")
+    // bidirectional mapping --> only read
+    @OneToOne(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("department")
-    private List<CourseOffering> courseOfferings;
+    private DepartmentReviewer departmentReviewer;
 }
