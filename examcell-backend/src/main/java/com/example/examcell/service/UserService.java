@@ -1,13 +1,13 @@
 package com.example.examcell.service;
 
 import com.example.examcell.config.Mapper;
-import com.example.examcell.dto.UserDTO;
-import com.example.examcell.dto.UserDropdownDTO;
+import com.example.examcell.dto.dropdowndtos.UserDropdownDTO;
+import com.example.examcell.dto.userdtos.UserDTO;
 import com.example.examcell.model.Role;
 import com.example.examcell.model.User;
-import com.example.examcell.repository.RoleJpaRepository;
-import com.example.examcell.repository.UserJpaRepository;
-import com.example.examcell.repository.UserRepository;
+import com.example.examcell.repository.contractrepos.UserRepository;
+import com.example.examcell.repository.jparepos.RoleJpaRepository;
+import com.example.examcell.repository.jparepos.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

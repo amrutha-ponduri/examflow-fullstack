@@ -1,8 +1,8 @@
 package com.example.examcell.service;
 
 import com.example.examcell.model.Course;
-import com.example.examcell.repository.CourseJpaRepository;
-import com.example.examcell.repository.CourseRepository;
+import com.example.examcell.repository.contractrepos.CourseRepository;
+import com.example.examcell.repository.jparepos.CourseJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

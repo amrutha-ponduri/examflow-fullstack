@@ -1,8 +1,8 @@
 package com.example.examcell.service;
 
 import com.example.examcell.model.Role;
-import com.example.examcell.repository.RoleJpaRepository;
-import com.example.examcell.repository.RoleRepository;
+import com.example.examcell.repository.contractrepos.RoleRepository;
+import com.example.examcell.repository.jparepos.RoleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

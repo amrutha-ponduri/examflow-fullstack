@@ -1,9 +1,9 @@
 package com.example.examcell.service;
 
-import com.example.examcell.dto.ProgramDropdownItemDTO;
+import com.example.examcell.dto.dropdowndtos.ProgramDropdownItemDTO;
 import com.example.examcell.model.Program;
-import com.example.examcell.repository.ProgramJpaRepository;
-import com.example.examcell.repository.ProgramRepository;
+import com.example.examcell.repository.contractrepos.ProgramRepository;
+import com.example.examcell.repository.jparepos.ProgramJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

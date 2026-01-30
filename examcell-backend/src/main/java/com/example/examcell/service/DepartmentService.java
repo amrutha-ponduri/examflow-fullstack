@@ -1,17 +1,17 @@
 package com.example.examcell.service;
 
 import com.example.examcell.config.Mapper;
-import com.example.examcell.dto.DepartmentDTO;
-import com.example.examcell.dto.DepartmentDropdownItemDTO;
-import com.example.examcell.dto.DepartmentReviewerDTO;
+import com.example.examcell.dto.departmentdtos.DepartmentDTO;
+import com.example.examcell.dto.departmentdtos.DepartmentReviewerDTO;
+import com.example.examcell.dto.dropdowndtos.DepartmentDropdownItemDTO;
 import com.example.examcell.model.Department;
 import com.example.examcell.model.DepartmentReviewer;
 import com.example.examcell.model.DepartmentReviewerId;
 import com.example.examcell.model.User;
-import com.example.examcell.repository.DepartmentJpaRepository;
-import com.example.examcell.repository.DepartmentRepository;
-import com.example.examcell.repository.DepartmentReviewerJpaRepository;
-import com.example.examcell.repository.UserJpaRepository;
+import com.example.examcell.repository.contractrepos.DepartmentRepository;
+import com.example.examcell.repository.jparepos.DepartmentJpaRepository;
+import com.example.examcell.repository.jparepos.DepartmentReviewerJpaRepository;
+import com.example.examcell.repository.jparepos.UserJpaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,8 +1,8 @@
 package com.example.examcell.controller;
 
-import com.example.examcell.dto.DepartmentDTO;
-import com.example.examcell.dto.DepartmentDropdownItemDTO;
-import com.example.examcell.dto.DepartmentReviewerDTO;
+import com.example.examcell.dto.departmentdtos.DepartmentDTO;
+import com.example.examcell.dto.departmentdtos.DepartmentReviewerDTO;
+import com.example.examcell.dto.dropdowndtos.DepartmentDropdownItemDTO;
 import com.example.examcell.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

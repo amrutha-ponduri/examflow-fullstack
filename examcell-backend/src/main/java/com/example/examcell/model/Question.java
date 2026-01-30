@@ -22,7 +22,7 @@ public class Question {
     // Foreign key
     @ManyToOne
     @JoinColumn(name = "module_id")
-    private Module module;
+    private ModuleInfo moduleInfo;
     @ManyToOne
     @JoinColumn(name = "questionbank_id")
     @JsonIgnoreProperties("questions")

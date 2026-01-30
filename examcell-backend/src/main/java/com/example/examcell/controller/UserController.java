@@ -1,7 +1,7 @@
 package com.example.examcell.controller;
 
-import com.example.examcell.dto.UserDTO;
-import com.example.examcell.dto.UserDropdownDTO;
+import com.example.examcell.dto.dropdowndtos.UserDropdownDTO;
+import com.example.examcell.dto.userdtos.UserDTO;
 import com.example.examcell.model.User;
 import com.example.examcell.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

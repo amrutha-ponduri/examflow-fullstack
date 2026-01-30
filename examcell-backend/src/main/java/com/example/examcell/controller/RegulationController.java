@@ -1,6 +1,6 @@
 package com.example.examcell.controller;
 
-import com.example.examcell.dto.RegulationDropdownItemDTO;
+import com.example.examcell.dto.dropdowndtos.RegulationDropdownItemDTO;
 import com.example.examcell.model.Regulation;
 import com.example.examcell.service.RegulationService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package com.example.examcell.service;
 
-import com.example.examcell.dto.RegulationDropdownItemDTO;
+import com.example.examcell.dto.dropdowndtos.RegulationDropdownItemDTO;
 import com.example.examcell.model.Regulation;
 import com.example.examcell.model.SectionRules;
-import com.example.examcell.repository.RegulationJpaRepository;
-import com.example.examcell.repository.RegulationRepository;
+import com.example.examcell.repository.contractrepos.RegulationRepository;
+import com.example.examcell.repository.jparepos.RegulationJpaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

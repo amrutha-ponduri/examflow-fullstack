@@ -1,14 +1,12 @@
 package com.example.examcell.config;
 
-import com.example.examcell.dto.CourseOfferingDetailsDTO;
-import com.example.examcell.dto.DepartmentDTO;
-import com.example.examcell.dto.UserDTO;
-import com.example.examcell.model.CourseOffering;
-import com.example.examcell.model.Department;
-import com.example.examcell.model.Role;
-import com.example.examcell.model.User;
-import com.example.examcell.repository.CourseOfferingJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.examcell.dto.courseofferingdtos.CourseOfferingCompleteDetailsDTO;
+import com.example.examcell.dto.courseofferingdtos.CourseOfferingDTO;
+import com.example.examcell.dto.courseofferingdtos.CourseOfferingDetailsDTO;
+import com.example.examcell.dto.departmentdtos.DepartmentDTO;
+import com.example.examcell.dto.moduledtos.ModuleDTO;
+import com.example.examcell.dto.userdtos.UserDTO;
+import com.example.examcell.model.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,12 +15,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class Mapper {
-    private final CourseOfferingJpaRepository courseOfferingJpaRepository;
-
-    @Autowired
-    public Mapper(CourseOfferingJpaRepository courseOfferingJpaRepository) {
-        this.courseOfferingJpaRepository = courseOfferingJpaRepository;
-    }
 
     public UserDTO toUserDTO(User user) {
         List<CourseOffering> courseOfferings = user.getCourseOfferings();
@@ -44,5 +36,28 @@ public class Mapper {
 
     public DepartmentDTO toDepartmentDTO(Department department) {
         return new DepartmentDTO(department.getId(), department.getDepartmentName(), department.getDepartmentReviewer().getUser().getName());
+    }
+
+    public CourseOfferingCompleteDetailsDTO toCourseOfferingCompleteDetailsDTO(CourseOffering courseOffering) {
+
+        List<String> instructorNames = courseOffering.getInstructors().stream().map(User::getName).collect(Collectors.toList());
+        List<ModuleDTO> modulesInfo = courseOffering.getModuleInfos().stream().map(this::toModuleDTO).collect(Collectors.toList());
+        return new CourseOfferingCompleteDetailsDTO(courseOffering.getId(), courseOffering.getAcademicYear(), courseOffering.getSemester(),
+                courseOffering.getYearOfStudy(), courseOffering.getDepartment().getDepartmentName(),
+                courseOffering.getCourse().getCourseCode(), courseOffering.getCourse().getCourseTitle(),
+                courseOffering.getProgram().getProgramName(), courseOffering.getProgram().getProgramName(),
+                courseOffering.getSubmitter().getName(), instructorNames, modulesInfo);
+    }
+
+    public ModuleDTO toModuleDTO(ModuleInfo moduleInfo) {
+        return new ModuleDTO(moduleInfo.getModuleNo(), moduleInfo.getModuleName());
+    }
+
+    public CourseOfferingDTO toCourseOfferingDTO(CourseOffering courseOffering) {
+        return new CourseOfferingDTO(courseOffering.getId(),
+                courseOffering.getSemester(), courseOffering.getYearOfStudy(),
+                courseOffering.getDepartment().getAbbreviation(),
+                courseOffering.getRegulation().getRegulationName(),
+                courseOffering.getCourse().getCourseTitle());
     }
 }
