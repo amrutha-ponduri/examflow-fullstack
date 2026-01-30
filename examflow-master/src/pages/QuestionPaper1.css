@@ -1,17 +1,28 @@
 .paper-container {
-  width: 900px;
+  width: 210mm;
+  min-height: 297mm;
   margin: auto;
-  font-family: "Times New Roman";
+  padding: 15mm;
+  box-sizing: border-box;
+  font-family: "Times New Roman", serif;
   color: #000;
+  background: white;
+}
+
+.pdf-content {
+  width: 100%;
+  margin: auto;
 }
 
 .college-header {
   text-align: center;
   border-bottom: 2px solid black;
+  padding-bottom: 8px;
 }
 
-.autonomous {
-  font-weight: bold;
+.center-img {
+  display: block;
+  margin: 0 auto 5px auto;
 }
 
 .course-box {
@@ -20,11 +31,17 @@
   border: 1px solid black;
   padding: 10px;
   margin: 15px 0;
+  font-size: 14px;
 }
 
 .unit-title {
   text-align: center;
   margin: 20px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin: 15px 0;
 }
 
 .questions-section {
@@ -46,7 +63,28 @@
   font-style: italic;
 }
 
-.center-img {
-  display: block;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  page-break-inside: avoid;
+}
+
+tr, td, th {
+  page-break-inside: avoid;
+}
+
+h2, h3 {
+  page-break-after: avoid;
+}
+
+.page-break {
+  page-break-before: always;
+}
+
+.dwnl{
+  width: 210mm;
+  min-height: 297mm;
   margin: auto;
+  padding: 15mm;
+  box-sizing: border-box;
 }

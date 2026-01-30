@@ -12,6 +12,12 @@ import QuestionBankView from "./pages/QuestionBankView";
 import QuestionGeneration from "./pages/QuestionGeneration";
 import QuestionBankUpload from "./pages/QuestionBankUpload";
 import QuestionPaper from "./pages/QuestionPaper";
+import CourseForm from "./pages/CourseForm";
+import UserForm from "./pages/UserForm";
+import DepartmentForm from "./pages/DepartmentForm";
+import ProgramForm from "./pages/ProgramForm";
+import RegulationForm from "./pages/RegulationForm";
+import CourseOfferingContainer from "./pages/CourseOfferingContainer";
 import NotFound from "./pages/NotFound";
 
 
@@ -25,8 +31,14 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
             {/* <Route path="/" element={<QuestionPaper />} /> */}
+            {/* <Route path="/" element={<CourseForm />} /> */}
+            {/* <Route path="/" element={<UserForm />} /> */}
+            {/* <Route path="/" element={<DepartmentForm />} /> */}
+            {/* <Route path="/" element={<ProgramForm />} /> */}
+            {/* <Route path="/" element={<RegulationForm />} /> */}
+            <Route path="/" element={<CourseOfferingContainer />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/faculty" element={<FacultyDashboard />} />

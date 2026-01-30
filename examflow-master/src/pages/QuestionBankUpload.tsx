@@ -519,6 +519,7 @@ const QuestionBankUpload = () => {
                         <TableHead>Question Content</TableHead>
                         <TableHead className="w-24 text-center">Image</TableHead>
                         <TableHead className="w-16 text-center">Delete</TableHead>
+                        <TableHead className="w-16 text-center">Add</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
