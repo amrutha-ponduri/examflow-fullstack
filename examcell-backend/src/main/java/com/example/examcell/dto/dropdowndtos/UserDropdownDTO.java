@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UserDropdownDTO {
-    private int userId;
+    private int id;
     private String username;
     private String name;
 }

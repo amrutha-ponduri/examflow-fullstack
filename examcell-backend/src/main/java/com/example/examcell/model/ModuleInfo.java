@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "module_info")
 public class ModuleInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

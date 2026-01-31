@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 // http://localhost:8080/courses
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/courses")
 public class CourseController {
     private final CourseService courseService;
@@ -22,6 +23,11 @@ public class CourseController {
     // url -> http://localhost:8080/courses
     @GetMapping("")
     public ArrayList<Course> getAllCourses() {
+        return courseService.getAllCourses();
+    }
+
+    @GetMapping("/dropdown")
+    public ArrayList<Course> getAllCoursesDropdowns() {
         return courseService.getAllCourses();
     }
 

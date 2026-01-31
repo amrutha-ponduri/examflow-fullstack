@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ProgramDropdownItemDTO {
-    int id;
+    private int id;
     @JsonProperty("program_name")
-    String programName;
+    private String programName;
 }

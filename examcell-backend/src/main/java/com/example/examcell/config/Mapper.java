@@ -5,6 +5,10 @@ import com.example.examcell.dto.courseofferingdtos.CourseOfferingDTO;
 import com.example.examcell.dto.courseofferingdtos.CourseOfferingDetailsDTO;
 import com.example.examcell.dto.departmentdtos.DepartmentDTO;
 import com.example.examcell.dto.moduledtos.ModuleDTO;
+import com.example.examcell.dto.questionbankdtos.QuestionBankCompleteDetailsDTO;
+import com.example.examcell.dto.questionbankdtos.QuestionBankDTO;
+import com.example.examcell.dto.questiondtos.QuestionDTO;
+import com.example.examcell.dto.questiondtos.SubquestionDTO;
 import com.example.examcell.dto.userdtos.UserDTO;
 import com.example.examcell.model.*;
 import org.springframework.stereotype.Component;
@@ -59,5 +63,22 @@ public class Mapper {
                 courseOffering.getDepartment().getAbbreviation(),
                 courseOffering.getRegulation().getRegulationName(),
                 courseOffering.getCourse().getCourseTitle());
+    }
+
+    public QuestionBankDTO toQuestionBankDTO(QuestionBank questionBank) {
+        return new QuestionBankDTO(questionBank.getId(), questionBank.getReviewStatus(), questionBank.getSubmittedAt(), questionBank.getCourseOffering().getCourse().getCourseCode(), questionBank.getCourseOffering().getCourse().getCourseTitle());
+    }
+
+    public QuestionBankCompleteDetailsDTO toQuestionBakCompleteDetailsDTO(QuestionBank questionBank) {
+        return new QuestionBankCompleteDetailsDTO(questionBank.getId(), questionBank.getReviewStatus(), questionBank.getSubmittedAt(), questionBank.getCourseOffering().getCourse().getCourseCode(), questionBank.getCourseOffering().getCourse().getCourseTitle(), questionBank.getCourseOffering().getSubmitter().getName(), questionBank.getCourseOffering().getDepartment().getDepartmentReviewer().getUser().getName(), questionBank.getCourseOffering().getDepartment().getDepartmentName(), questionBank.getCourseOffering().getRegulation().getRegulationName(), questionBank.getCourseOffering().getProgram().getProgramName());
+    }
+
+    public QuestionDTO toQuestionDTO(Question question) {
+        List<SubquestionDTO> subquestions = question.getSubquestions().stream().map(this::toSubquestionDTO).collect(Collectors.toList());
+        return new QuestionDTO(question.getId(), question.getMarks(), question.getSno(), question.getModuleInfo().getModuleNo(), subquestions);
+    }
+
+    public SubquestionDTO toSubquestionDTO(Subquestion subquestion) {
+        return new SubquestionDTO(subquestion.getId(), subquestion.getContent(), subquestion.getImageURLs(), subquestion.getMarks(), subquestion.getBloomsLevel());
     }
 }

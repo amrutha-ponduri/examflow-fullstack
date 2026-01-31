@@ -1,6 +1,7 @@
 package com.example.examcell.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,20 +17,24 @@ import java.util.List;
 @Entity
 public class Question {
     @Id
-    private int id;
-    private int marks;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private Integer marks;
+    private Integer sno;
 
     // Foreign key
     @ManyToOne
     @JoinColumn(name = "module_id")
+    @JsonProperty("module_info")
     private ModuleInfo moduleInfo;
     @ManyToOne
     @JoinColumn(name = "questionbank_id")
     @JsonIgnoreProperties("questions")
+    @JsonProperty("question_bank")
     private QuestionBank questionBank;
 
-    // bidirectional
-    @OneToMany(mappedBy = "question")
+    // bidirectional --> only reading
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("question")
     private List<Subquestion> subquestions;
 }
