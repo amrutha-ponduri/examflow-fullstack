@@ -35,16 +35,39 @@ public class QuestionService implements QuestionRepository {
     @Override
     @Transactional
     public QuestionDTO addQuestion(Question question) {
-        int questionBankId = question.getQuestionBank().getId();
-        int moduleId = question.getModuleInfo().getId();
-        System.out.println(moduleId);
-        question.setModuleInfo(moduleInfoJpaRepository.findById(moduleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found")));
-        question.setQuestionBank(questionBankJpaRepository.findById(questionBankId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Question bank is not found")));
-        for (Subquestion subquestion : question.getSubquestions()) {
-            subquestion.setQuestion(question);
+
+        if (question.getQuestionBank() == null || question.getQuestionBank().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "QuestionBank id is required");
         }
+
+        if (question.getModuleInfo() == null || question.getModuleInfo().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Module id is required");
+        }
+
+        QuestionBank questionBank = questionBankJpaRepository
+                .findById(question.getQuestionBank().getId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Question bank not found")
+                );
+
+        ModuleInfo moduleInfo = moduleInfoJpaRepository
+                .findById(question.getModuleInfo().getId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Module not found")
+                );
+
+        question.setQuestionBank(questionBank);
+        question.setModuleInfo(moduleInfo);
+
+        if (question.getSubquestions() != null) {
+            for (Subquestion subquestion : question.getSubquestions()) {
+                subquestion.setQuestion(question);
+            }
+        }
+
         return mapper.toQuestionDTO(questionJpaRepository.save(question));
     }
+
 
     @Override
     @Transactional

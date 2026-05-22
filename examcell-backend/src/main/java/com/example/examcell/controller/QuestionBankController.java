@@ -1,5 +1,7 @@
 package com.example.examcell.controller;
 
+import com.example.examcell.dto.questionbankconfigdtos.ConfigurationRequestDTO;
+import com.example.examcell.dto.questionbankconfigdtos.QuestionBankConfigurationDetailsDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankCompleteDetailsDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankDTO;
 import com.example.examcell.dto.questiondtos.QuestionDTO;
@@ -33,8 +35,8 @@ public class QuestionBankController {
     }
 
     @PostMapping("")
-    public QuestionBankDTO addQuestionBank(@RequestBody QuestionBank questionBank) {
-        return questionBankService.addQuestionBank(questionBank);
+    public QuestionBankDTO addQuestionBank(@RequestBody ConfigurationRequestDTO configurationRequestDTO) {
+        return questionBankService.addQuestionBank(configurationRequestDTO);
     }
 
     @PutMapping("/{id}")
@@ -52,4 +54,8 @@ public class QuestionBankController {
         return questionBankService.getAllQuestionsForQuestionBank(id);
     }
 
+    @PostMapping("/configuration_details")
+    public QuestionBankConfigurationDetailsDTO getQuestionBankConfigurationDetails(@RequestBody ConfigurationRequestDTO configurationRequestDTO) {
+        return questionBankService.getQuestionBankConfigurationDetails(configurationRequestDTO);
+    }
 }

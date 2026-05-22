@@ -14,4 +14,6 @@ public interface UserJpaRepository extends JpaRepository<User, Integer> {
             SELECT new com.example.examcell.dto.dropdowndtos.UserDropdownDTO(u.id, u.username, u.name)
             FROM User u""")
     List<UserDropdownDTO> findAllUserDropdownItems();
+
+    User findByUsername(String username);
 }

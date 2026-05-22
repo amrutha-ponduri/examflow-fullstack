@@ -1,5 +1,6 @@
 package com.example.examcell.repository.contractrepos;
 
+import com.example.examcell.dto.questionbankconfigdtos.ConfigurationRequestDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankCompleteDetailsDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankDTO;
 import com.example.examcell.dto.questiondtos.QuestionDTO;
@@ -12,7 +13,7 @@ public interface QuestionBankRepository {
 
     public QuestionBankCompleteDetailsDTO getQuestionBankById(int id);
 
-    public QuestionBankDTO addQuestionBank(QuestionBank questionBank);
+    QuestionBankDTO addQuestionBank(ConfigurationRequestDTO configurationRequestDTO);
 
     public QuestionBankCompleteDetailsDTO updateQuestionBank(int id, QuestionBank questionBank);
 

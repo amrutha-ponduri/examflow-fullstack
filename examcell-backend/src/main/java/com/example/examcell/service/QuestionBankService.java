@@ -1,14 +1,21 @@
 package com.example.examcell.service;
 
 import com.example.examcell.config.Mapper;
+import com.example.examcell.dto.questionbankconfigdtos.ConfigurationRequestDTO;
+import com.example.examcell.dto.questionbankconfigdtos.ModuleInfoDTO;
+import com.example.examcell.dto.questionbankconfigdtos.QuestionBankConfigurationDetailsDTO;
+import com.example.examcell.dto.questionbankconfigdtos.SectionRulesDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankCompleteDetailsDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankDTO;
 import com.example.examcell.dto.questiondtos.QuestionDTO;
 import com.example.examcell.model.CourseOffering;
+import com.example.examcell.model.ModuleInfo;
 import com.example.examcell.model.QuestionBank;
+import com.example.examcell.model.SectionRules;
 import com.example.examcell.repository.contractrepos.QuestionBankRepository;
 import com.example.examcell.repository.jparepos.CourseOfferingJpaRepository;
 import com.example.examcell.repository.jparepos.QuestionBankJpaRepository;
+import com.example.examcell.repository.jparepos.RegulationJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,12 +30,14 @@ public class QuestionBankService implements QuestionBankRepository {
     private final QuestionBankJpaRepository questionBankJpaRepository;
     private final Mapper mapper;
     private final CourseOfferingJpaRepository courseOfferingJpaRepository;
+    private final RegulationJpaRepository regulationJpaRepository;
 
     @Autowired
-    public QuestionBankService(QuestionBankJpaRepository questionBankJpaRepository, Mapper mapper, CourseOfferingJpaRepository courseOfferingJpaRepository) {
+    public QuestionBankService(QuestionBankJpaRepository questionBankJpaRepository, Mapper mapper, CourseOfferingJpaRepository courseOfferingJpaRepository, RegulationJpaRepository regulationJpaRepository) {
         this.questionBankJpaRepository = questionBankJpaRepository;
         this.mapper = mapper;
         this.courseOfferingJpaRepository = courseOfferingJpaRepository;
+        this.regulationJpaRepository = regulationJpaRepository;
     }
 
     @Override
@@ -44,12 +53,12 @@ public class QuestionBankService implements QuestionBankRepository {
     }
 
     @Override
-    public QuestionBankDTO addQuestionBank(QuestionBank questionBank) {
-        if (questionBank.getCourseOffering() != null) {
-            CourseOffering completeCourseOffering = courseOfferingJpaRepository.findById(questionBank.getCourseOffering().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course offering not found"));
-            questionBank.setCourseOffering(completeCourseOffering);
-        }
-        questionBankJpaRepository.save(questionBank);
+    public QuestionBankDTO addQuestionBank(ConfigurationRequestDTO configurationRequestDTO) {
+        CourseOffering courseOffering = courseOfferingJpaRepository.findCourseOfferingByDepartmentCourseAndProgram(configurationRequestDTO.getCourseId(), configurationRequestDTO.getDepartmentId(), configurationRequestDTO.getProgramId());
+        QuestionBank questionBank = new QuestionBank();
+        questionBank.setCourseOffering(courseOffering);
+        questionBank.setReviewStatus("Not submitted");
+        questionBank.setSubmittedAt("Not submitted");
         return mapper.toQuestionBankDTO(questionBankJpaRepository.save(questionBank));
     }
 
@@ -79,6 +88,14 @@ public class QuestionBankService implements QuestionBankRepository {
     @Override
     public ArrayList<QuestionDTO> getAllQuestionsForQuestionBank(int id) {
         QuestionBank questionBank = questionBankJpaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Question bank not found"));
-        return new ArrayList<>(questionBank.getQuestions().stream().map((question) -> mapper.toQuestionDTO(question)).collect(Collectors.toList()));
+        return questionBank.getQuestions().stream().map(mapper::toQuestionDTO).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public QuestionBankConfigurationDetailsDTO getQuestionBankConfigurationDetails(ConfigurationRequestDTO configurationRequestDTO) {
+        ArrayList<SectionRules> sectionsRules = new ArrayList<>(regulationJpaRepository.findSectionRulesByRegulation(configurationRequestDTO.getRegulationId()));
+        ArrayList<SectionRulesDTO> sectionRulesDTOS = sectionsRules.stream().map(mapper::toSectionRulesDTO).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<ModuleInfo> modulesInfo = new ArrayList<>(courseOfferingJpaRepository.findAllModuleInfos(configurationRequestDTO.getCourseId(), configurationRequestDTO.getDepartmentId(), configurationRequestDTO.getProgramId()));
+        ArrayList<ModuleInfoDTO> moduleInfoDTOS = modulesInfo.stream().map(mapper::toModuleInfoDTO).collect(Collectors.toCollection(ArrayList::new));
+        return new QuestionBankConfigurationDetailsDTO(moduleInfoDTOS, sectionRulesDTOS);
     }
 }

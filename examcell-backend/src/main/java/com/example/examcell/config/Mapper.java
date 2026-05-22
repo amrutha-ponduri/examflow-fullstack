@@ -5,6 +5,8 @@ import com.example.examcell.dto.courseofferingdtos.CourseOfferingDTO;
 import com.example.examcell.dto.courseofferingdtos.CourseOfferingDetailsDTO;
 import com.example.examcell.dto.departmentdtos.DepartmentDTO;
 import com.example.examcell.dto.moduledtos.ModuleDTO;
+import com.example.examcell.dto.questionbankconfigdtos.ModuleInfoDTO;
+import com.example.examcell.dto.questionbankconfigdtos.SectionRulesDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankCompleteDetailsDTO;
 import com.example.examcell.dto.questionbankdtos.QuestionBankDTO;
 import com.example.examcell.dto.questiondtos.QuestionDTO;
@@ -80,5 +82,13 @@ public class Mapper {
 
     public SubquestionDTO toSubquestionDTO(Subquestion subquestion) {
         return new SubquestionDTO(subquestion.getId(), subquestion.getContent(), subquestion.getImageURLs(), subquestion.getMarks(), subquestion.getBloomsLevel());
+    }
+
+    public SectionRulesDTO toSectionRulesDTO(SectionRules sectionRules) {
+        return new SectionRulesDTO(sectionRules.getMinQuestionsCount(), sectionRules.getSectionName(), sectionRules.getMarks());
+    }
+
+    public ModuleInfoDTO toModuleInfoDTO(ModuleInfo moduleInfo) {
+        return new ModuleInfoDTO(moduleInfo.getModuleNo(), moduleInfo.getModuleName());
     }
 }
